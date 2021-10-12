@@ -1,0 +1,85 @@
+----------------------- CHIT CHAT --------------------
+--------Databases------
+USERS---
+uid : int, Primary Key
+username : varchar, Unique
+password : varchar
+name : varchar
+email : 
+phonenumber :
+joining_date : TimeStamp
+photograph : varchar
+
+
+CHATS---
+cid : int, Primary Key
+user_one_id : int , Foreign Key
+user_two_id : int , Foreign Key
+
+
+MESSAGES---
+mid : int, Primary Key
+text : varchar
+cid : int , Foreign Key
+time : TimeStamp
+updated_time : TimeStamp
+direction : boolean
+bookmark : boolean
+
+
+--------Databases------
+MESSAGES---
+/messages/{uid}
+    GET all messages either sent or recieved by the user with user id : uid
+    Will--
+        Will get "cid(s)" from "CHAT" which are related to the {uid} and get all messages related to the "cid(s)" from "MESSAGES" 
+
+/messages/{sid} + rid (Recievers ID) + message (Message)
+    POST a new message sent by the user with user id : sid
+    Will--
+        Will check if a chat exists with the 2 users mentioned or not
+        if no:
+            Create a new chat
+        else:
+            Get the "cid" from "CHATS"
+        Add a new message to the "MESSAGES" where
+            if {sid} is user_one_id:
+                direction = true
+            else:
+                direction = false
+
+/messages/{mid}
+    GET All information related to the message id : {mid} from "MESSAGES"
+
+/messages/{mid} + message + bookmark
+    EDIT message id : {mid} from "MESSAGES"
+    if message is editted:
+        update the "updated_time" as well in "MESSAGES"
+    else 
+        only edit the bookmark
+
+/messages/{mid}
+    if "cid" related to the {mid} is the only message with this cid in the table:
+        DELETE the chat from "CHATS"
+    DELETE the message id : {mid} from "MESSAGES"
+
+USERS---
+/users
+    GET all the users
+
+/users + username + password + name + email + phonenumber + photograph
+    POST : Add a new user
+
+/users/{uid}:
+    DELETE the user with id : {uid}
+    DELETE the chats related to {uid} and get all these cids
+    DELETE all the messages related to the above cids
+
+/users/{uid}
+    GET all information related to a user with id : {uid}
+
+/users/{uid} + password + email + phonenumber + photograph
+    PUT information related to a user with id : {uid}
+
+/users/usernames
+    GET all the usernames present
