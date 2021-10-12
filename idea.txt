@@ -30,11 +30,11 @@ bookmark : boolean
 --------Databases------
 MESSAGES---
 /messages/{uid}
-    GET all messages either sent or recieved by the user with user id : uid
+    GET all messages either sent or received by the user with user id : uid
     Will--
         Will get "cid(s)" from "CHAT" which are related to the {uid} and get all messages related to the "cid(s)" from "MESSAGES" 
 
-/messages/{sid} + rid (Recievers ID) + message (Message)
+/messages/{sid} + rid (Receiver's ID) + message (Message)
     POST a new message sent by the user with user id : sid
     Will--
         Will check if a chat exists with the 2 users mentioned or not
@@ -53,7 +53,7 @@ MESSAGES---
 
 /messages/{mid} + message + bookmark
     EDIT message id : {mid} from "MESSAGES"
-    if message is editted:
+    if message is edited:
         update the "updated_time" as well in "MESSAGES"
     else 
         only edit the bookmark
@@ -83,3 +83,8 @@ USERS---
 
 /users/usernames
     GET all the usernames present
+
+
+CHATS---
+/chats/{cid}
+    GET all the messages related to the chat : {cid} from "MESSAGES" 
